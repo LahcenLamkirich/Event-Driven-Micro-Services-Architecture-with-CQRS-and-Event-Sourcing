@@ -1,25 +1,31 @@
 package com.lamkirich.comptecqrseventsourcing.Commands.controllers;
 
+import com.lamkirich.comptecqrseventsourcing.CommonApi.commands.CreateAccountCommand;
 import com.lamkirich.comptecqrseventsourcing.CommonApi.dtos.CreateAccountRequestDTO;
-import org.axonframework.commandhandling.CommandBus;
+import lombok.AllArgsConstructor;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @RequestMapping("/commands/account")
+@AllArgsConstructor
 public class AccountCommandController {
-    private CommandBus commandBus ;
-
-    public AccountCommandController(CommandBus commandBus) {
-        this.commandBus = commandBus;
-    }
-
+    public CommandGateway commandGateway;
 
     @PostMapping("/create")
-    public String createAccount(@RequestBody CreateAccountRequestDTO request){
-        return "Test";
+    public CompletableFuture<String> createAccount(@RequestBody CreateAccountRequestDTO request){
+        CompletableFuture<String> commandeResponse = commandGateway.send(new CreateAccountCommand(
+                UUID.randomUUID().toString(),
+                request.getInitialBalance(),
+                request.getCurrency()
+        ));
+        return commandeResponse ;
     }
 
 }
