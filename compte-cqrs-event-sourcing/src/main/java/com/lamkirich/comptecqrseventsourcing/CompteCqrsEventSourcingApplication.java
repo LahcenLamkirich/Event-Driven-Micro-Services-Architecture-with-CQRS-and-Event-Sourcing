@@ -9,8 +9,7 @@ import org.springframework.context.annotation.Bean;
 public class CompteCqrsEventSourcingApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CompteCqrsEventSourcingApplication.class, args);
-
+         SpringApplication.run(CompteCqrsEventSourcingApplication.class, args);
     }
 
     @Bean

@@ -2,6 +2,7 @@ package com.lamkirich.comptecqrseventsourcing.commande.api.aggregate;
 
 import com.lamkirich.comptecqrseventsourcing.commande.api.commands.CreateAccountCommand;
 import com.lamkirich.comptecqrseventsourcing.commande.api.events.AccountCreatedEvent;
+import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
@@ -17,6 +18,7 @@ public class AccountAggregate {
     private double initialBalance;
 
     // Constructor that will inject the CreateAccountCommand
+    @CommandHandler
     public AccountAggregate(CreateAccountCommand createAccountCommand) {
         // Perform validations:
         AccountCreatedEvent accountCreatedEvent = new AccountCreatedEvent();
