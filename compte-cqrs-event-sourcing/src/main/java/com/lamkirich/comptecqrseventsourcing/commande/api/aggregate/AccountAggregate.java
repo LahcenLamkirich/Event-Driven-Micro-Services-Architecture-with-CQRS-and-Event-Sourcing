@@ -2,6 +2,7 @@ package com.lamkirich.comptecqrseventsourcing.commande.api.aggregate;
 
 import com.lamkirich.comptecqrseventsourcing.commande.api.commands.CreateAccountCommand;
 import com.lamkirich.comptecqrseventsourcing.commande.api.events.AccountCreatedEvent;
+import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
@@ -12,7 +13,6 @@ public class AccountAggregate {
 
     @AggregateIdentifier
     private String AccountId;
-
     private String currency;
     private double initialBalance;
 
@@ -27,6 +27,12 @@ public class AccountAggregate {
     }
 
     // default Constructor
-    public AccountAggregate() {
+    public AccountAggregate() {}
+
+    @EventSourcingHandler
+    public void on(AccountCreatedEvent accountCreatedEvent){
+        this.AccountId = accountCreatedEvent.getAccountId();
+        this.currency = accountCreatedEvent.getCurrency();
+        this.initialBalance = accountCreatedEvent.getInitialBalance();
     }
 }

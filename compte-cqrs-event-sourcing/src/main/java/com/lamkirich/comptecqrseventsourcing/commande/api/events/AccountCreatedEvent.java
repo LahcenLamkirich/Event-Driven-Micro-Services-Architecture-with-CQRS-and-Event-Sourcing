@@ -11,4 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AccountCreatedEvent {
 
+    private String AccountId;
+    private String currency;
+    private double initialBalance;
+
 }
